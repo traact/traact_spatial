@@ -40,7 +40,9 @@
 #include "component/PrintBodyList.h"
 #include "traact/component/spatial/util/Pose6DTestSource.h"
 
+
 namespace traact::spatial {
+
 
 
 class SpatialPlugin : public traact::facade::Plugin {
@@ -91,9 +93,13 @@ class SpatialPlugin : public traact::facade::Plugin {
 
     return nullptr;
   }
+
+  RTTR_ENABLE(traact::facade::Plugin)
 };
 
 }
+
+
 
 // It is not possible to place the macro multiple times in one cpp file. When you compile your plugin with the gcc toolchain,
 // make sure you use the compiler option: -fno-gnu-unique. otherwise the unregistration will not work properly.
@@ -101,8 +107,8 @@ RTTR_PLUGIN_REGISTRATION // remark the different registration macro!
 {
 
   using namespace rttr;
-  registration::class_<traact::spatial::SpatialPlugin>("SpatialPlugin").constructor<>()
+registration::class_<traact::spatial::SpatialPlugin>("SpatialPlugin").constructor<>()
       (
-          policy::ctor::as_std_shared_ptr
+          //policy::ctor::as_std_shared_ptr		  
       );
 }

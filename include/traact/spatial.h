@@ -35,23 +35,25 @@
 #include <traact/buffer/GenericFactoryObject.h>
 #include <traact/buffer/GenericBufferTypeConversion.h>
 #include <traact/datatypes.h>
+#include <Eigen/Core>
 #include <Eigen/Geometry>
-#include <traact/traact_export.h>
+#include <Eigen/LU>
+#include <traact/traact_spatial_export.h>
 namespace traact::spatial {
 
-struct TRAACT_EXPORT Pose6DHeader {
+struct TRAACT_SPATIAL_EXPORT Pose6DHeader {
   /**
    * Definitions needed by traact and the user to use a datatype
    */
   static const char * MetaType;
-  typedef Eigen::Affine3d NativeType;
+  typedef typename Eigen::Affine3d NativeType;
   static const char * NativeTypeName;
   const size_t size = sizeof(NativeType);
 };
 
 
 
-class TRAACT_EXPORT Pose6DFactoryObject : public buffer::GenericFactoryObject {
+class TRAACT_SPATIAL_EXPORT Pose6DFactoryObject : public buffer::GenericFactoryObject {
  public:
   std::string getTypeName() override {
     return std::move(std::string(Pose6DHeader::MetaType));

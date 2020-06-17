@@ -37,7 +37,7 @@
 
 namespace traact::spatial {
 
-enum class TRAACT_EXPORT BodyJointType {
+enum class TRAACT_SPATIAL_EXPORT BodyJointType {
   PELVIS = 0,
   SPINE_NAVAL,
   SPINE_CHEST,
@@ -73,23 +73,23 @@ enum class TRAACT_EXPORT BodyJointType {
   COUNT
 };
 
-class TRAACT_EXPORT BodyUtils {
+class TRAACT_SPATIAL_EXPORT BodyUtils {
  public:
   static std::map<BodyJointType, BodyJointType> JointToParent;
 
 };
 
-struct TRAACT_EXPORT BodyJoint {
+struct TRAACT_SPATIAL_EXPORT BodyJoint {
   Pose6DHeader::NativeType pose;
   int confidenceLevel{0};
 };
 
-struct TRAACT_EXPORT Body {
+struct TRAACT_SPATIAL_EXPORT Body {
   int id{-1};
   std::map<BodyJointType, BodyJoint> bodyJoints;
 };
 
-struct TRAACT_EXPORT BodyHeader {
+struct TRAACT_SPATIAL_EXPORT BodyHeader {
   /**
    * Definitions needed by traact and the user to use a datatype
    */
@@ -99,7 +99,7 @@ struct TRAACT_EXPORT BodyHeader {
   const size_t size = sizeof(NativeType);
 };
 
-struct TRAACT_EXPORT BodyListHeader {
+struct TRAACT_SPATIAL_EXPORT BodyListHeader {
   /**
    * Definitions needed by traact and the user to use a datatype
    */
@@ -111,11 +111,11 @@ struct TRAACT_EXPORT BodyListHeader {
 
 
 
-class TRAACT_EXPORT BodyFactoryObject : public buffer::TemplatedDefaultFactoryObject<BodyHeader> {
+class TRAACT_SPATIAL_EXPORT BodyFactoryObject : public buffer::TemplatedDefaultFactoryObject<BodyHeader> {
 
 };
 
-class TRAACT_EXPORT BodyListFactoryObject : public buffer::TemplatedDefaultFactoryObject<BodyListHeader> {
+class TRAACT_SPATIAL_EXPORT BodyListFactoryObject : public buffer::TemplatedDefaultFactoryObject<BodyListHeader> {
 
 };
 

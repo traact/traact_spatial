@@ -115,6 +115,11 @@ const spatial::BodyListHeader::NativeType &GenericBufferTypeConversion::asImmuta
   return *static_cast<spatial::BodyListHeader::NativeType *>(obj);
 }
 
+template TRAACT_SPATIAL_EXPORT spatial::BodyHeader::NativeType &GenericBufferTypeConversion::asMutable<spatial::BodyHeader::NativeType, spatial::BodyHeader>(void*, void*);
+template TRAACT_SPATIAL_EXPORT const spatial::BodyHeader::NativeType &GenericBufferTypeConversion::asImmutable<spatial::BodyHeader::NativeType, spatial::BodyHeader>(void*, void*);
+
+template TRAACT_SPATIAL_EXPORT spatial::BodyListHeader::NativeType &GenericBufferTypeConversion::asMutable<spatial::BodyListHeader::NativeType, spatial::BodyListHeader>(void*, void*);
+template TRAACT_SPATIAL_EXPORT const spatial::BodyListHeader::NativeType &GenericBufferTypeConversion::asImmutable<spatial::BodyListHeader::NativeType, spatial::BodyListHeader>(void*, void*);
 
 }
 

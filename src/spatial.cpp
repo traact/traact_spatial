@@ -63,5 +63,9 @@ const Eigen::Translation3d &GenericBufferTypeConversion::asImmutable<Eigen::Tran
   return std::move(tmp2);
 }
 
+template TRAACT_SPATIAL_EXPORT spatial::Pose6DHeader::NativeType &GenericBufferTypeConversion::asMutable<spatial::Pose6DHeader::NativeType, spatial::Pose6DHeader>(void*, void* );
+template TRAACT_SPATIAL_EXPORT const spatial::Pose6DHeader::NativeType &GenericBufferTypeConversion::asImmutable<spatial::Pose6DHeader::NativeType, spatial::Pose6DHeader>(void*, void*);
+template TRAACT_SPATIAL_EXPORT const Eigen::Translation3d &GenericBufferTypeConversion::asImmutable<Eigen::Translation3d, spatial::Pose6DHeader>(void*, void*);
+
 }
 

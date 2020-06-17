@@ -95,17 +95,19 @@ class SpatialApplicationPlugin : public traact::facade::Plugin {
 
     return nullptr;
   }
+  RTTR_ENABLE(traact::facade::Plugin)
 };
 
 
 }
 
+
 RTTR_PLUGIN_REGISTRATION // remark the different registration macro!
 {
 
   using namespace rttr;
-  registration::class_<traact::component::facade::SpatialApplicationPlugin>("SpatialApplicationPlugin").constructor<>()
+registration::class_<traact::component::facade::SpatialApplicationPlugin>("SpatialApplicationPlugin").constructor<>()
       (
-          policy::ctor::as_std_shared_ptr
+          //policy::ctor::as_std_shared_ptr		  
       );
 }

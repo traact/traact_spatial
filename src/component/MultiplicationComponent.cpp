@@ -39,5 +39,7 @@ bool MultiplicationComponent::processTimePoint(DefaultComponentBuffer &data) {
   auto &output = data.getOutput<Eigen::Affine3d, traact::spatial::Pose6DHeader>(0);
 
   output = input0 * input1;
+
+  return true;
 }
 }

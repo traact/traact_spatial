@@ -62,6 +62,7 @@ class Pose6DTestSource : public Component {
     running_ = true;
     spdlog::info("starting simple source");
     thread_.reset(new std::thread(std::bind(&Pose6DTestSource::threadLoop, this)));
+	return true;
   }
   bool stop() override {
     spdlog::info("stopping simple source");
@@ -69,7 +70,7 @@ class Pose6DTestSource : public Component {
       running_ = false;
       thread_->join();
     }
-
+	return true;
   }
 
   void waitForFinish() {
