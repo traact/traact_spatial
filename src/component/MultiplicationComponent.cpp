@@ -43,3 +43,4 @@ bool MultiplicationComponent::processTimePoint(DefaultComponentBuffer &data) {
   return true;
 }
 }
+
