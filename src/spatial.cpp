@@ -29,10 +29,9 @@
  *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 **/
 
-#include <traact/facade/Plugin.h>
 
 #include "traact/spatial.h"
-
+#include <rttr/registration>
 namespace traact::spatial {
 
 const char * Pose6DHeader::NativeTypeName =  "Eigen::Affine3d";
@@ -69,3 +68,13 @@ template TRAACT_SPATIAL_EXPORT const Eigen::Translation3d &GenericBufferTypeConv
 
 }
 
+RTTR_PLUGIN_REGISTRATION // remark the different registration macro!
+{
+/*
+  using namespace rttr;
+  registration::class_<traact::spatial::Pose6DFactoryObject>("Pose6DFactoryObject").constructor<>()
+      (
+          //policy::ctor::as_std_shared_ptr
+      );
+      */
+}

@@ -39,6 +39,7 @@
 #include <Eigen/Geometry>
 #include <Eigen/LU>
 #include <traact/traact_spatial_export.h>
+#include <rttr/type>
 namespace traact::spatial {
 
 struct TRAACT_SPATIAL_EXPORT Pose6DHeader {
@@ -49,23 +50,15 @@ struct TRAACT_SPATIAL_EXPORT Pose6DHeader {
   typedef typename Eigen::Affine3d NativeType;
   static const char * NativeTypeName;
   const size_t size = sizeof(NativeType);
+
+  RTTR_ENABLE()
 };
 
 
 
-class TRAACT_SPATIAL_EXPORT Pose6DFactoryObject : public buffer::GenericFactoryObject {
- public:
-  std::string getTypeName() override {
-    return std::move(std::string(Pose6DHeader::MetaType));
-  }
-  void *createObject(void *) override {
-    return new Pose6DHeader::NativeType;
-  }
-  void deleteObject(void *obj) override {
-    auto *tmp = static_cast<Pose6DHeader::NativeType *>(obj);
-    delete tmp;
-  }
+class TRAACT_SPATIAL_EXPORT Pose6DFactoryObject : public buffer::TemplatedDefaultFactoryObject<Pose6DHeader> {
 
+  RTTR_ENABLE(buffer::TemplatedDefaultFactoryObject<Pose6DHeader>, buffer::GenericFactoryObject)
 };
 
 
