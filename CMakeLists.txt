@@ -16,12 +16,10 @@ set(PLUGIN_HEADERS
 # rest of source code
 set(LIB_SOURCES src/spatial.cpp src/spatialBody.cpp)
 
-set(PLUGIN_SOURCES src/SpatialPlugin.cpp
+set(PLUGIN_SOURCES
         src/component/MultiplicationComponent.cpp
-        src/component/MultiplicationComponent.h
         src/component/Pose6DTestSource.cpp
         src/component/Pose6DPrint.cpp
-        src/component/Pose6DPrint.h
         src/component/facade/SpatialApplicationComponent.cpp src/component/PrintBodyList.h)
 
 
@@ -73,11 +71,13 @@ if (MSVC)
     add_definitions(-D_DISABLE_EXTENDED_ALIGNED_STORAGE -DHAVE_SNPRINTF)
 endif()
 
-add_link_options( -fno-gnu-unique )
+add_compile_options( -fno-gnu-unique )
 
 add_library(${CONAN_PACKAGE_NAME} SHARED
         ${LIB_HEADERS}
         ${LIB_SOURCES}
+        ${PLUGIN_HEADERS}
+        ${PLUGIN_SOURCES}
         )
 
 
@@ -106,37 +106,36 @@ install(TARGETS ${CONAN_PACKAGE_NAME}
 
 
 # Plugin -----------------------
-add_library(traact_spatial_plugin SHARED
-        ${PLUGIN_HEADERS}
-        ${PLUGIN_SOURCES}
-        )
+#add_library(traact_spatial_plugin SHARED
+#        ${PLUGIN_HEADERS}
+#        ${PLUGIN_SOURCES}
+#        )
 
-target_link_libraries(traact_spatial_plugin
-        ${CONAN_PACKAGE_NAME})
+#target_link_libraries(traact_spatial_plugin
+#        ${CONAN_PACKAGE_NAME})
+#add_compile_options( -fno-gnu-unique )
 
-#set_target_properties(traact_spatial_plugin PROPERTIES VERSION ${CONAN_PACKAGE_VERSION})
 
+#if (MSVC)
+#    # per default disable extended aligned storage for now on msvc
+#    add_definitions(-D_DISABLE_EXTENDED_ALIGNED_STORAGE -DHAVE_SNPRINTF)
+#endif()
 
-if (MSVC)
-    # per default disable extended aligned storage for now on msvc
-    add_definitions(-D_DISABLE_EXTENDED_ALIGNED_STORAGE -DHAVE_SNPRINTF)
-endif()
+#target_include_directories(${CONAN_PACKAGE_NAME} PUBLIC
+#        $<INSTALL_INTERFACE:include>
+#        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>)
+#target_include_directories(${CONAN_PACKAGE_NAME} PRIVATE
+#        ${CMAKE_CURRENT_SOURCE_DIR}/src
+#        )
 
-target_include_directories(${CONAN_PACKAGE_NAME} PUBLIC
-        $<INSTALL_INTERFACE:include>
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>)
-target_include_directories(${CONAN_PACKAGE_NAME} PRIVATE
-        ${CMAKE_CURRENT_SOURCE_DIR}/src
-        )
+#IF (NOT WIN32)
+#    MESSAGE(STATUS "Set boost::ublas alignment to 16")
+#    set_target_properties(${CONAN_PACKAGE_NAME} PROPERTIES COMPILE_DEFINITIONS "BOOST_UBLAS_BOUNDED_ARRAY_ALIGN=__attribute__ ((aligned (16)))")
+#ENDIF (NOT WIN32)
 
-IF (NOT WIN32)
-    MESSAGE(STATUS "Set boost::ublas alignment to 16")
-    set_target_properties(${CONAN_PACKAGE_NAME} PROPERTIES COMPILE_DEFINITIONS "BOOST_UBLAS_BOUNDED_ARRAY_ALIGN=__attribute__ ((aligned (16)))")
-ENDIF (NOT WIN32)
-
-install(TARGETS traact_spatial_plugin
-        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-        PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+#install(TARGETS traact_spatial_plugin
+#        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
+#        PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 
 #-----------------------------
 

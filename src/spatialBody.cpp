@@ -29,7 +29,6 @@
  *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 **/
 
-#include <traact/facade/Plugin.h>
 
 #include "traact/spatialBody.h"
 

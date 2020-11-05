@@ -32,6 +32,8 @@
 
 #include "traact/spatial.h"
 #include <rttr/registration>
+#include <traact/component/facade/ApplicationAsyncSource.h>
+#include <traact/component/facade/ApplicationSyncSink.h>
 namespace traact::spatial {
 
 const char * Pose6DHeader::NativeTypeName =  "Eigen::Affine3d";
@@ -68,13 +70,13 @@ template TRAACT_SPATIAL_EXPORT const Eigen::Translation3d &GenericBufferTypeConv
 
 }
 
+// It is not possible to place the macro multiple times in one cpp file. When you compile your plugin with the gcc toolchain,
+// make sure you use the compiler option: -fno-gnu-unique. otherwise the unregistration will not work properly.
 RTTR_PLUGIN_REGISTRATION // remark the different registration macro!
 {
-/*
-  using namespace rttr;
-  registration::class_<traact::spatial::Pose6DFactoryObject>("Pose6DFactoryObject").constructor<>()
-      (
-          //policy::ctor::as_std_shared_ptr
-      );
-      */
+
+    using namespace rttr;
+    registration::class_<traact::spatial::Pose6DFactoryObject>("Pose6DFactoryObject").constructor<>()();
+    registration::class_<traact::component::facade::ApplicationAsyncSource<traact::spatial::Pose6DHeader> >("ApplicationAsyncSource_Eigen::Affine3d").constructor<std::string>()();
+    registration::class_<traact::component::facade::ApplicationSyncSink<traact::spatial::Pose6DHeader> >("ApplicationSyncSink_Eigen::Affine3d").constructor<std::string>()();
 }

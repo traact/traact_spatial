@@ -31,83 +31,15 @@
 
 #include <rttr/registration>
 #include <rttr/type>
-#include <traact/facade/Plugin.h>
 #include <traact/component/facade/ApplicationAsyncSource.h>
 #include <traact/component/facade/ApplicationSyncSink.h>
 #include <traact/spatial.h>
 
 namespace traact::component::facade {
 
-template <typename HeaderType>
-traact::pattern::Pattern::Ptr getAsyncSourcePattern() {
-  pattern::spatial::SpatialPattern::Ptr spatial_ptr = std::make_shared<pattern::spatial::SpatialPattern>();
-  pattern::Pattern::Ptr pattern_ptr = std::dynamic_pointer_cast<pattern::Pattern>(spatial_ptr);
-  ApplicationAsyncSource<spatial::Pose6DHeader>::fillPattern(pattern_ptr);
 
-  spatial_ptr->concurrency = unlimited;
-  spatial_ptr->addCoordianteSystem("Origin", false)
-      .addCoordianteSystem("Destination", false)
-  .addEdge("Origin", "Destination", "output");
-  return spatial_ptr;
-
-}
-
-template <typename HeaderType>
-traact::pattern::Pattern::Ptr getSyncSinkPattern() {
-  pattern::spatial::SpatialPattern::Ptr spatial_ptr = std::make_shared<pattern::spatial::SpatialPattern>();
-  pattern::Pattern::Ptr pattern_ptr = std::dynamic_pointer_cast<pattern::Pattern>(spatial_ptr);
-  ApplicationSyncSink<spatial::Pose6DHeader>::fillPattern(pattern_ptr);
-
-  spatial_ptr->concurrency = serial;
-  spatial_ptr->addCoordianteSystem("Origin", false)
-      .addCoordianteSystem("Destination", false)
-      .addEdge("Origin", "Destination", "input");
-  return spatial_ptr;
-
-}
-
-class SpatialApplicationPlugin : public traact::facade::Plugin {
- public:
-
-  void fillPatternNames(std::vector<std::string> &pattern_names) override {
-    pattern_names.emplace_back(getAsyncSourcePattern<traact::spatial::Pose6DHeader>()->name);
-    pattern_names.emplace_back(getSyncSinkPattern<traact::spatial::Pose6DHeader>()->name);
-
-  }
-
-  pattern::Pattern::Ptr instantiatePattern(const std::string &pattern_name) override {
-    if (pattern_name == getAsyncSourcePattern<traact::spatial::Pose6DHeader>()->name)
-      return getAsyncSourcePattern<traact::spatial::Pose6DHeader>();
-    if (pattern_name == getSyncSinkPattern<traact::spatial::Pose6DHeader>()->name)
-      return getSyncSinkPattern<traact::spatial::Pose6DHeader>();
-
-
-    return nullptr;
-  }
-  component::Component::Ptr instantiateComponent(const std::string &pattern_name,
-                                                 const std::string &new_component_name) override {
-
-    if (pattern_name == getAsyncSourcePattern<traact::spatial::Pose6DHeader>()->name)
-      return std::make_shared<component::facade::ApplicationAsyncSource<spatial::Pose6DHeader> >(new_component_name);
-    if (pattern_name == getSyncSinkPattern<traact::spatial::Pose6DHeader>()->name)
-      return std::make_shared<component::facade::ApplicationSyncSink<spatial::Pose6DHeader> >(new_component_name);
-
-
-    return nullptr;
-  }
-  RTTR_ENABLE(traact::facade::Plugin)
-};
 
 
 }
 
 
-RTTR_PLUGIN_REGISTRATION // remark the different registration macro!
-{
-
-  using namespace rttr;
-registration::class_<traact::component::facade::SpatialApplicationPlugin>("SpatialApplicationPlugin").constructor<>()
-      (
-          //policy::ctor::as_std_shared_ptr		  
-      );
-}

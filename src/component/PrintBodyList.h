@@ -45,7 +45,7 @@ class PrintBodyList : public traact::DefaultComponent {
 
   }
 
-  static traact::pattern::Pattern::Ptr getPattern() {
+  traact::pattern::Pattern::Ptr GetPattern() const{
     using namespace traact::spatial;
     traact::pattern::spatial::SpatialPattern::Ptr
         pattern =

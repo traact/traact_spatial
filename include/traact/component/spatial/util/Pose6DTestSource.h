@@ -43,7 +43,7 @@ class Pose6DTestSource : public Component {
     running_ = false;
   }
 
-  static traact::pattern::Pattern::Ptr getPattern() {
+  traact::pattern::Pattern::Ptr GetPattern() const{
     using namespace traact::spatial;
 
     traact::pattern::spatial::SpatialPattern::Ptr
@@ -117,6 +117,7 @@ class Pose6DTestSource : public Component {
     spdlog::trace("source quit loop");
     running_ = false;
   }
+RTTR_ENABLE(Component)
 };
 
 }
