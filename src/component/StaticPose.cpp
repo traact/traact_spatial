@@ -29,69 +29,86 @@
  *  OF THIS SOFTWARE, EVEN IF ADVISED OF THE POSSIBILITY OF SUCH DAMAGE.
 **/
 
-#include <sstream>
-#include <traact/traact.h>
-#include "traact/spatial.h"
-#include <rttr/registration>
-namespace traact::component::spatial::util {
 
-    class Pose6DPrint : public traact::DefaultComponent {
+
+
+#include <rttr/registration>
+#include <traact/traact.h>
+#include <fmt/format.h>
+#include <traact/spatial.h>
+namespace traact::component {
+
+    class StaticPose : public Component {
     public:
-        explicit Pose6DPrint(const std::string &name) : traact::DefaultComponent(name,
-                                                                                 traact::component::ComponentType::SyncSink) {
-            lastTimestamp = traact::TimestampType::min();
+        explicit StaticPose(const std::string &name) : Component(name,traact::component::ComponentType::SyncSource){
         }
 
-        traact::pattern::Pattern::Ptr GetPattern() const {
-            using namespace traact::spatial;
+
+
+        traact::pattern::Pattern::Ptr GetPattern()  const {
+
+
+            std::string pattern_name = fmt::format("StaticPose");
+
             traact::pattern::spatial::SpatialPattern::Ptr
                     pattern =
-                    std::make_shared<traact::pattern::spatial::SpatialPattern>("Pose6DPrint", serial);
+                    std::make_shared<traact::pattern::spatial::SpatialPattern>(pattern_name, serial);
 
-            pattern->addConsumerPort("input", Pose6DHeader::MetaType);
+            pattern->addProducerPort("output", spatial::Pose6DHeader::MetaType);
+
+            pattern->addParameter("tx",0);
+            pattern->addParameter("ty",0);
+            pattern->addParameter("tz",0);
+
+            pattern->addParameter("rx",0);
+            pattern->addParameter("ry",0);
+            pattern->addParameter("rz",0);
+            pattern->addParameter("rw",1);
 
             return pattern;
         }
 
-        bool processTimePoint(traact::DefaultComponentBuffer &data) override {
-            using namespace traact::spatial;
-            const auto &input = data.getInput<Pose6DHeader::NativeType, Pose6DHeader>(0);
+        bool configure(const nlohmann::json &parameter, buffer::GenericComponentBufferConfig *data) override {
+            double tx,ty,tz,rx,ry,rz,rw;
+            pattern::setValueFromParameter(parameter, "tx", tx, 0);
+            pattern::setValueFromParameter(parameter, "ty", ty, 0);
+            pattern::setValueFromParameter(parameter, "tz", tz, 0);
 
-            traact::TimestampType ts = data.getTimestamp();
-            if (ts < lastTimestamp) {
-                spdlog::warn("current ts: {0} < lastTs: {1}",
-                             ts.time_since_epoch().count(),
-                             lastTimestamp.time_since_epoch().count());
-            }
+            pattern::setValueFromParameter(parameter, "rx", rx, 0);
+            pattern::setValueFromParameter(parameter, "ry", ry, 0);
+            pattern::setValueFromParameter(parameter, "rz", rz, 0);
+            pattern::setValueFromParameter(parameter, "rw", rw, 1);
 
-            Eigen::IOFormat CleanFmt(4, 0, ", ", "\n", "[", "]");
-            std::stringstream ss;
-            ss << input.matrix().format(CleanFmt);
+            pose_.setIdentity();
+            pose_.translate(Eigen::Vector3d(tx,ty,tz));
+            pose_.rotate(Eigen::Quaterniond(rw,rx,ry,rz));
 
-
-            spdlog::info("{0} ts: {1}, value: \n{2}", "Pose6DPrint", ts.time_since_epoch().count(), ss.str());
-
-            lastTimestamp = ts;
 
             return true;
-
         }
+
+        bool processTimePoint(buffer::GenericComponentBuffer &data) override {
+            auto& output = data.getOutput<Eigen::Affine3d, spatial::Pose6DHeader>(0);
+            output = pose_;
+            return true;
+        }
+
+
     protected:
-        traact::TimestampType lastTimestamp;
+
+        Eigen::Affine3d pose_;
+
 
     RTTR_ENABLE(Component)
+
     };
 
 }
-
 // It is not possible to place the macro multiple times in one cpp file. When you compile your plugin with the gcc toolchain,
 // make sure you use the compiler option: -fno-gnu-unique. otherwise the unregistration will not work properly.
 RTTR_PLUGIN_REGISTRATION // remark the different registration macro!
 {
 
     using namespace rttr;
-    registration::class_<traact::component::spatial::util::Pose6DPrint>("Pose6DPrint").constructor<std::string>()
-            (
-                    //policy::ctor::as_std_shared_ptr
-            );
+    registration::class_<traact::component::StaticPose>("StaticPose").constructor<std::string>()();
 }

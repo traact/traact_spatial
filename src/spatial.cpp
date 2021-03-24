@@ -39,6 +39,12 @@ namespace traact::spatial {
 const char * Pose6DHeader::NativeTypeName =  "Eigen::Affine3d";
 const char * Pose6DHeader::MetaType =  "spatial:Pose6D";
 
+    const char * Position2DListHeader::NativeTypeName =  "std::vector<Eigen::Vector2d>";
+    const char * Position2DListHeader::MetaType =  "spatial:Position2DList";
+
+    const char * Position3DListHeader::NativeTypeName =  "std::vector<Eigen::Vector3d, Eigen::aligned_allocator<Eigen::Vector3d>>";
+    const char * Position3DListHeader::MetaType =  "spatial:Position3DList";
+
 }
 
 namespace traact::buffer {
@@ -64,10 +70,44 @@ const Eigen::Translation3d &GenericBufferTypeConversion::asImmutable<Eigen::Tran
   return std::move(tmp2);
 }
 
+    template<>
+    spatial::Position2DListHeader::NativeType &GenericBufferTypeConversion::asMutable<spatial::Position2DListHeader::NativeType,
+            spatial::Position2DListHeader>(void *obj,
+                                   void *header) {
+        return *static_cast<spatial::Position2DListHeader::NativeType *>(obj);
+    }
+
+    template<>
+    const spatial::Position2DListHeader::NativeType &GenericBufferTypeConversion::asImmutable<spatial::Position2DListHeader::NativeType,
+            spatial::Position2DListHeader>(void *obj,
+                                   void *header) {
+        return *static_cast<spatial::Position2DListHeader::NativeType *>(obj);
+    }
+
+    template<>
+    spatial::Position3DListHeader::NativeType &GenericBufferTypeConversion::asMutable<spatial::Position3DListHeader::NativeType,
+            spatial::Position3DListHeader>(void *obj,
+                                           void *header) {
+        return *static_cast<spatial::Position3DListHeader::NativeType *>(obj);
+    }
+
+    template<>
+    const spatial::Position3DListHeader::NativeType &GenericBufferTypeConversion::asImmutable<spatial::Position3DListHeader::NativeType,
+            spatial::Position3DListHeader>(void *obj,
+                                           void *header) {
+        return *static_cast<spatial::Position3DListHeader::NativeType *>(obj);
+    }
+
+
 template TRAACT_SPATIAL_EXPORT spatial::Pose6DHeader::NativeType &GenericBufferTypeConversion::asMutable<spatial::Pose6DHeader::NativeType, spatial::Pose6DHeader>(void*, void* );
 template TRAACT_SPATIAL_EXPORT const spatial::Pose6DHeader::NativeType &GenericBufferTypeConversion::asImmutable<spatial::Pose6DHeader::NativeType, spatial::Pose6DHeader>(void*, void*);
 template TRAACT_SPATIAL_EXPORT const Eigen::Translation3d &GenericBufferTypeConversion::asImmutable<Eigen::Translation3d, spatial::Pose6DHeader>(void*, void*);
 
+    template TRAACT_SPATIAL_EXPORT spatial::Position2DListHeader::NativeType &GenericBufferTypeConversion::asMutable<spatial::Position2DListHeader::NativeType, spatial::Position2DListHeader>(void*, void* );
+    template TRAACT_SPATIAL_EXPORT const spatial::Position2DListHeader::NativeType &GenericBufferTypeConversion::asImmutable<spatial::Position2DListHeader::NativeType, spatial::Position2DListHeader>(void*, void*);
+
+    template TRAACT_SPATIAL_EXPORT spatial::Position3DListHeader::NativeType &GenericBufferTypeConversion::asMutable<spatial::Position3DListHeader::NativeType, spatial::Position3DListHeader>(void*, void* );
+    template TRAACT_SPATIAL_EXPORT const spatial::Position3DListHeader::NativeType &GenericBufferTypeConversion::asImmutable<spatial::Position3DListHeader::NativeType, spatial::Position3DListHeader>(void*, void*);
 }
 
 // It is not possible to place the macro multiple times in one cpp file. When you compile your plugin with the gcc toolchain,
@@ -77,6 +117,8 @@ RTTR_PLUGIN_REGISTRATION // remark the different registration macro!
 
     using namespace rttr;
     registration::class_<traact::spatial::Pose6DFactoryObject>("Pose6DFactoryObject").constructor<>()();
+    registration::class_<traact::spatial::Position2DListFactoryObject>("Position2DListFactoryObject").constructor<>()();
+    registration::class_<traact::spatial::Position3DListFactoryObject>("Position3DListFactoryObject").constructor<>()();
     registration::class_<traact::component::facade::ApplicationAsyncSource<traact::spatial::Pose6DHeader> >("ApplicationAsyncSource_Eigen::Affine3d").constructor<std::string>()();
     registration::class_<traact::component::facade::ApplicationSyncSink<traact::spatial::Pose6DHeader> >("ApplicationSyncSink_Eigen::Affine3d").constructor<std::string>()();
 }

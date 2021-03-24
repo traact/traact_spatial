@@ -38,8 +38,5 @@ RTTR_PLUGIN_REGISTRATION // remark the different registration macro!
 {
 
     using namespace rttr;
-    registration::class_<traact::component::spatial::util::Pose6DTestSource>("Pose6DTestSource").constructor<std::string>()
-            (
-                    //policy::ctor::as_std_shared_ptr
-            );
+    registration::class_<traact::component::spatial::util::Pose6DTestSource>("Pose6DTestSource").constructor<std::string>()();
 }

@@ -87,27 +87,31 @@ class Pose6DTestSource : public Component {
     using namespace traact;
     TimestampType ts = traact::TimestampType::min();
     //TimestampType ts = now();
-    TimeDurationType deltaTs = std::chrono::milliseconds(5);
+    TimeDurationType deltaTs = std::chrono::milliseconds(10);
 
     int output_count = 0;
     internal_data_ = internal_data_ * Eigen::Translation3d(0, 0, 1);
 
     while (running_ && output_count < 1000) {
       std::this_thread::sleep_for(deltaTs);
-      ts += std::chrono::nanoseconds(1);
+      ts += std::chrono::milliseconds (10);
 
       spdlog::trace("request buffer");
 
-      if (request_callback_(ts) != 0)
+    auto buffer = request_callback_(ts);
+    if (buffer == nullptr){
+        SPDLOG_WARN("request for buffer at ts {0} was rejected", ts.time_since_epoch().count());
         continue;
+    }
 
-      auto &buffer = acquire_callback_(ts);
-      auto &newData = buffer.getOutput<Pose6DHeader::NativeType, Pose6DHeader>(0);
+
+
+      auto &newData = buffer->getOutput<Pose6DHeader::NativeType, Pose6DHeader>(0);
 
       newData = internal_data_;
 
       spdlog::trace("commit data");
-      commit_callback_(ts);
+        buffer->Commit(true);
 
       internal_data_ = internal_data_ * Eigen::Translation3d(0, 0, 1);
       output_count++;

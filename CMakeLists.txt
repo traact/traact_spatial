@@ -20,7 +20,7 @@ set(PLUGIN_SOURCES
         src/component/MultiplicationComponent.cpp
         src/component/Pose6DTestSource.cpp
         src/component/Pose6DPrint.cpp
-        src/component/facade/SpatialApplicationComponent.cpp src/component/PrintBodyList.h)
+        src/component/facade/SpatialApplicationComponent.cpp src/component/PrintBodyList.h src/component/StaticPose.cpp)
 
 
 # conan is required hard, library name, version and description are configured from conan
