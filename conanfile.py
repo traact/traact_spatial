@@ -30,11 +30,13 @@ class Traact(ConanFile):
     exports_sources = "include/*", "src/*", "util/*", "tests/*", "CMakeLists.txt"
 
     def requirements(self):        
-        self.requires("traact_facade/%s@camposs/stable" % self.version)
+        self.requires("traact_core/%s@camposs/stable" % self.version)
 
         if self.options.with_tests:
             self.requires("gtest/1.10.0")
-        self.requires("eigen/3.3.7@camposs/stable")
+        self.requires("eigen/[3.3.9]@camposs/stable")
+        #self.requires("ceres/1.14.0-r4@camposs/stable")
+        self.requires("ceres-solver/2.0.0")
         
     def _configure_cmake(self):
         cmake = CMake(self)
@@ -53,7 +55,8 @@ class Traact(ConanFile):
         return cmake
 
     def configure(self):
-        self.options['traact_core'].shared = self.options.shared        
+        self.options['traact_core'].shared = self.options.shared
+        self.options['ceres-solver'].use_TBB = True
 
     def build(self):
         cmake = self._configure_cmake()
@@ -64,5 +67,5 @@ class Traact(ConanFile):
         cmake.install()
 
     def package_info(self):
-        self.cpp_info.libs = ["traact_spatial"]
+        self.cpp_info.libs = [self.name]
         #self.cpp_info.libs = tools.collect_libs(self)

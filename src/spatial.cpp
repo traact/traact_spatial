@@ -49,21 +49,21 @@ const char * Pose6DHeader::MetaType =  "spatial:Pose6D";
 
 namespace traact::buffer {
 template<>
-spatial::Pose6DHeader::NativeType &GenericBufferTypeConversion::asMutable<spatial::Pose6DHeader::NativeType,
+spatial::Pose6DHeader::NativeType &BufferTypeConversion::asMutable<spatial::Pose6DHeader::NativeType,
                                                                           spatial::Pose6DHeader>(void *obj,
                                                                                                  void *header) {
   return *static_cast<spatial::Pose6DHeader::NativeType *>(obj);
 }
 
 template<>
-const spatial::Pose6DHeader::NativeType &GenericBufferTypeConversion::asImmutable<spatial::Pose6DHeader::NativeType,
+const spatial::Pose6DHeader::NativeType &BufferTypeConversion::asImmutable<spatial::Pose6DHeader::NativeType,
                                                                                   spatial::Pose6DHeader>(void *obj,
                                                                                                          void *header) {
   return *static_cast<spatial::Pose6DHeader::NativeType *>(obj);
 }
 
 template<>
-const Eigen::Translation3d &GenericBufferTypeConversion::asImmutable<Eigen::Translation3d,
+const Eigen::Translation3d &BufferTypeConversion::asImmutable<Eigen::Translation3d,
                                                                      spatial::Pose6DHeader>(void *obj, void *header) {
   auto tmp = static_cast<spatial::Pose6DHeader::NativeType *>(obj);
   Eigen::Translation3d tmp2(tmp->translation());
@@ -71,43 +71,43 @@ const Eigen::Translation3d &GenericBufferTypeConversion::asImmutable<Eigen::Tran
 }
 
     template<>
-    spatial::Position2DListHeader::NativeType &GenericBufferTypeConversion::asMutable<spatial::Position2DListHeader::NativeType,
+    spatial::Position2DListHeader::NativeType &BufferTypeConversion::asMutable<spatial::Position2DListHeader::NativeType,
             spatial::Position2DListHeader>(void *obj,
                                    void *header) {
         return *static_cast<spatial::Position2DListHeader::NativeType *>(obj);
     }
 
     template<>
-    const spatial::Position2DListHeader::NativeType &GenericBufferTypeConversion::asImmutable<spatial::Position2DListHeader::NativeType,
+    const spatial::Position2DListHeader::NativeType &BufferTypeConversion::asImmutable<spatial::Position2DListHeader::NativeType,
             spatial::Position2DListHeader>(void *obj,
                                    void *header) {
         return *static_cast<spatial::Position2DListHeader::NativeType *>(obj);
     }
 
     template<>
-    spatial::Position3DListHeader::NativeType &GenericBufferTypeConversion::asMutable<spatial::Position3DListHeader::NativeType,
+    spatial::Position3DListHeader::NativeType &BufferTypeConversion::asMutable<spatial::Position3DListHeader::NativeType,
             spatial::Position3DListHeader>(void *obj,
                                            void *header) {
         return *static_cast<spatial::Position3DListHeader::NativeType *>(obj);
     }
 
     template<>
-    const spatial::Position3DListHeader::NativeType &GenericBufferTypeConversion::asImmutable<spatial::Position3DListHeader::NativeType,
+    const spatial::Position3DListHeader::NativeType &BufferTypeConversion::asImmutable<spatial::Position3DListHeader::NativeType,
             spatial::Position3DListHeader>(void *obj,
                                            void *header) {
         return *static_cast<spatial::Position3DListHeader::NativeType *>(obj);
     }
 
 
-template TRAACT_SPATIAL_EXPORT spatial::Pose6DHeader::NativeType &GenericBufferTypeConversion::asMutable<spatial::Pose6DHeader::NativeType, spatial::Pose6DHeader>(void*, void* );
-template TRAACT_SPATIAL_EXPORT const spatial::Pose6DHeader::NativeType &GenericBufferTypeConversion::asImmutable<spatial::Pose6DHeader::NativeType, spatial::Pose6DHeader>(void*, void*);
-template TRAACT_SPATIAL_EXPORT const Eigen::Translation3d &GenericBufferTypeConversion::asImmutable<Eigen::Translation3d, spatial::Pose6DHeader>(void*, void*);
+template TRAACT_SPATIAL_EXPORT spatial::Pose6DHeader::NativeType &BufferTypeConversion::asMutable<spatial::Pose6DHeader::NativeType, spatial::Pose6DHeader>(void*, void* );
+template TRAACT_SPATIAL_EXPORT const spatial::Pose6DHeader::NativeType &BufferTypeConversion::asImmutable<spatial::Pose6DHeader::NativeType, spatial::Pose6DHeader>(void*, void*);
+template TRAACT_SPATIAL_EXPORT const Eigen::Translation3d &BufferTypeConversion::asImmutable<Eigen::Translation3d, spatial::Pose6DHeader>(void*, void*);
 
-    template TRAACT_SPATIAL_EXPORT spatial::Position2DListHeader::NativeType &GenericBufferTypeConversion::asMutable<spatial::Position2DListHeader::NativeType, spatial::Position2DListHeader>(void*, void* );
-    template TRAACT_SPATIAL_EXPORT const spatial::Position2DListHeader::NativeType &GenericBufferTypeConversion::asImmutable<spatial::Position2DListHeader::NativeType, spatial::Position2DListHeader>(void*, void*);
+    template TRAACT_SPATIAL_EXPORT spatial::Position2DListHeader::NativeType &BufferTypeConversion::asMutable<spatial::Position2DListHeader::NativeType, spatial::Position2DListHeader>(void*, void* );
+    template TRAACT_SPATIAL_EXPORT const spatial::Position2DListHeader::NativeType &BufferTypeConversion::asImmutable<spatial::Position2DListHeader::NativeType, spatial::Position2DListHeader>(void*, void*);
 
-    template TRAACT_SPATIAL_EXPORT spatial::Position3DListHeader::NativeType &GenericBufferTypeConversion::asMutable<spatial::Position3DListHeader::NativeType, spatial::Position3DListHeader>(void*, void* );
-    template TRAACT_SPATIAL_EXPORT const spatial::Position3DListHeader::NativeType &GenericBufferTypeConversion::asImmutable<spatial::Position3DListHeader::NativeType, spatial::Position3DListHeader>(void*, void*);
+    template TRAACT_SPATIAL_EXPORT spatial::Position3DListHeader::NativeType &BufferTypeConversion::asMutable<spatial::Position3DListHeader::NativeType, spatial::Position3DListHeader>(void*, void* );
+    template TRAACT_SPATIAL_EXPORT const spatial::Position3DListHeader::NativeType &BufferTypeConversion::asImmutable<spatial::Position3DListHeader::NativeType, spatial::Position3DListHeader>(void*, void*);
 }
 
 // It is not possible to place the macro multiple times in one cpp file. When you compile your plugin with the gcc toolchain,

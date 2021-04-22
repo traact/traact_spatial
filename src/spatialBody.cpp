@@ -87,38 +87,38 @@ std::map<BodyJointType, BodyJointType> BodyUtils::JointToParent =
 
 namespace traact::buffer {
 template<>
-spatial::BodyHeader::NativeType &GenericBufferTypeConversion::asMutable<spatial::BodyHeader::NativeType,
+spatial::BodyHeader::NativeType &BufferTypeConversion::asMutable<spatial::BodyHeader::NativeType,
                                                                           spatial::BodyHeader>(void *obj,
                                                                                                  void *header) {
   return *static_cast<spatial::BodyHeader::NativeType *>(obj);
 }
 
 template<>
-const spatial::BodyHeader::NativeType &GenericBufferTypeConversion::asImmutable<spatial::BodyHeader::NativeType,
+const spatial::BodyHeader::NativeType &BufferTypeConversion::asImmutable<spatial::BodyHeader::NativeType,
                                                                                   spatial::BodyHeader>(void *obj,
                                                                                                          void *header) {
   return *static_cast<spatial::BodyHeader::NativeType *>(obj);
 }
 
 template<>
-spatial::BodyListHeader::NativeType &GenericBufferTypeConversion::asMutable<spatial::BodyListHeader::NativeType,
+spatial::BodyListHeader::NativeType &BufferTypeConversion::asMutable<spatial::BodyListHeader::NativeType,
                                                                         spatial::BodyListHeader>(void *obj,
                                                                                              void *header) {
   return *static_cast<spatial::BodyListHeader::NativeType *>(obj);
 }
 
 template<>
-const spatial::BodyListHeader::NativeType &GenericBufferTypeConversion::asImmutable<spatial::BodyListHeader::NativeType,
+const spatial::BodyListHeader::NativeType &BufferTypeConversion::asImmutable<spatial::BodyListHeader::NativeType,
                                                                                 spatial::BodyListHeader>(void *obj,
                                                                                                      void *header) {
   return *static_cast<spatial::BodyListHeader::NativeType *>(obj);
 }
 
-template TRAACT_SPATIAL_EXPORT spatial::BodyHeader::NativeType &GenericBufferTypeConversion::asMutable<spatial::BodyHeader::NativeType, spatial::BodyHeader>(void*, void*);
-template TRAACT_SPATIAL_EXPORT const spatial::BodyHeader::NativeType &GenericBufferTypeConversion::asImmutable<spatial::BodyHeader::NativeType, spatial::BodyHeader>(void*, void*);
+template TRAACT_SPATIAL_EXPORT spatial::BodyHeader::NativeType &BufferTypeConversion::asMutable<spatial::BodyHeader::NativeType, spatial::BodyHeader>(void*, void*);
+template TRAACT_SPATIAL_EXPORT const spatial::BodyHeader::NativeType &BufferTypeConversion::asImmutable<spatial::BodyHeader::NativeType, spatial::BodyHeader>(void*, void*);
 
-template TRAACT_SPATIAL_EXPORT spatial::BodyListHeader::NativeType &GenericBufferTypeConversion::asMutable<spatial::BodyListHeader::NativeType, spatial::BodyListHeader>(void*, void*);
-template TRAACT_SPATIAL_EXPORT const spatial::BodyListHeader::NativeType &GenericBufferTypeConversion::asImmutable<spatial::BodyListHeader::NativeType, spatial::BodyListHeader>(void*, void*);
+template TRAACT_SPATIAL_EXPORT spatial::BodyListHeader::NativeType &BufferTypeConversion::asMutable<spatial::BodyListHeader::NativeType, spatial::BodyListHeader>(void*, void*);
+template TRAACT_SPATIAL_EXPORT const spatial::BodyListHeader::NativeType &BufferTypeConversion::asImmutable<spatial::BodyListHeader::NativeType, spatial::BodyListHeader>(void*, void*);
 
 }
 

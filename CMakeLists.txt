@@ -9,7 +9,7 @@ set(CMAKE_CXX_STANDARD 17)
 set(LIB_HEADERS include/traact/spatial.h include/traact/spatialBody.h include/traact/traact_spatial_export.h)
 
 set(PLUGIN_HEADERS
-        include/traact/component/spatial/util/Pose6DTestSource.h
+
         )
 
 
@@ -17,10 +17,7 @@ set(PLUGIN_HEADERS
 set(LIB_SOURCES src/spatial.cpp src/spatialBody.cpp)
 
 set(PLUGIN_SOURCES
-        src/component/MultiplicationComponent.cpp
-        src/component/Pose6DTestSource.cpp
-        src/component/Pose6DPrint.cpp
-        src/component/facade/SpatialApplicationComponent.cpp src/component/PrintBodyList.h src/component/StaticPose.cpp)
+        )
 
 
 # conan is required hard, library name, version and description are configured from conan
@@ -101,8 +98,13 @@ IF (NOT WIN32)
 ENDIF (NOT WIN32)
 
 install(TARGETS ${CONAN_PACKAGE_NAME}
-        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR}
-        PUBLIC_HEADER DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
+        LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR})
+
+install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/include/traact" # source directory
+        DESTINATION "include" # target directory
+        FILES_MATCHING # install only matched files
+        PATTERN "*.h" # select header files
+        )
 
 
 # Plugin -----------------------

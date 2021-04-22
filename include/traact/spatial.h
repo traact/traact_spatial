@@ -32,8 +32,8 @@
 #ifndef TRAACT_SPATIAL_MODULE_SRC_TRAACT_SPATIAL_SPATIALPLUGIN_H_
 #define TRAACT_SPATIAL_MODULE_SRC_TRAACT_SPATIAL_SPATIALPLUGIN_H_
 
-#include <traact/buffer/GenericFactoryObject.h>
-#include <traact/buffer/GenericBufferTypeConversion.h>
+#include <traact/buffer/BufferFactory.h>
+#include <traact/buffer/BufferTypeConversion.h>
 #include <traact/datatypes.h>
 #include <Eigen/Core>
 #include <Eigen/Geometry>
@@ -87,15 +87,15 @@ RTTR_ENABLE()
 
 
 class TRAACT_SPATIAL_EXPORT Pose6DFactoryObject : public buffer::TemplatedDefaultFactoryObject<Pose6DHeader> {
-  RTTR_ENABLE(buffer::TemplatedDefaultFactoryObject<Pose6DHeader>, buffer::GenericFactoryObject)
+  RTTR_ENABLE(buffer::TemplatedDefaultFactoryObject<Pose6DHeader>, buffer::BufferFactory)
 };
 
 class TRAACT_SPATIAL_EXPORT Position2DListFactoryObject : public buffer::TemplatedDefaultFactoryObject<Position2DListHeader> {
-RTTR_ENABLE(buffer::TemplatedDefaultFactoryObject<Position2DListHeader>, buffer::GenericFactoryObject)
+RTTR_ENABLE(buffer::TemplatedDefaultFactoryObject<Position2DListHeader>, buffer::BufferFactory)
 };
 
     class TRAACT_SPATIAL_EXPORT Position3DListFactoryObject : public buffer::TemplatedDefaultFactoryObject<Position3DListHeader> {
-    RTTR_ENABLE(buffer::TemplatedDefaultFactoryObject<Position3DListHeader>, buffer::GenericFactoryObject)
+    RTTR_ENABLE(buffer::TemplatedDefaultFactoryObject<Position3DListHeader>, buffer::BufferFactory)
     };
 
 }
