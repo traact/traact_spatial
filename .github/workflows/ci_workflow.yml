@@ -41,6 +41,7 @@ jobs:
     - name: Generating conan user directory and building the solution
       run: |
         conan user
+        conan remote list
         python build.py
       env:
         CONAN_LOGIN_USERNAME: "ci_user"
