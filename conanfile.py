@@ -8,7 +8,7 @@ class Traact(ConanFile):
     version = "0.0.1"
     
     description = "Spatial datatypes and functions for traact using eigen geometry"
-    url = ""
+    url = "https://github.com/traact/traact_spatial.git"
     license = "BSD 3-Clause"
     author = "Frieder Pankratz"
 
