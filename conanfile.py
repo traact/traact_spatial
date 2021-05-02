@@ -56,7 +56,7 @@ class Traact(ConanFile):
 
     def configure(self):
         self.options['traact_core'].shared = self.options.shared
-        self.options['ceres-solver'].use_TBB = True
+        #self.options['ceres-solver'].use_TBB = True
 
     def build(self):
         cmake = self._configure_cmake()
