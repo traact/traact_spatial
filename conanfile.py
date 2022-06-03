@@ -37,6 +37,7 @@ class Traact(ConanFile):
         self.requires("eigen/[3.3.9]@camposs/stable")
         #self.requires("ceres/1.14.0-r4@camposs/stable")
         self.requires("ceres-solver/2.0.0")
+
         
     def _configure_cmake(self):
         cmake = CMake(self)
@@ -58,6 +59,11 @@ class Traact(ConanFile):
         self.options['traact_core'].shared = self.options.shared
         self.options['ceres-solver'].shared = self.options.shared
         self.options['ceres-solver'].use_TBB = True
+        if self.settings.build_type != "Debug":
+            self.options['ceres-solver'].use_glog = True;
+            self.options['ceres-solver'].use_gflags = True;
+            self.options['glog'].shared = True;
+            self.options['gflags'].shared = True;
 
 
     def build(self):

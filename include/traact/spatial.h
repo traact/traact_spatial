@@ -45,6 +45,8 @@
 namespace traact::spatial {
 
     typedef typename Eigen::Affine3d Pose6D;
+    typedef typename Eigen::Vector2d Position2D;
+    typedef typename Eigen::Vector3d Position3D;
     typedef typename  std::vector<Eigen::Vector2d, Eigen::aligned_allocator<Eigen::Vector2d> > Position2DList;
     typedef typename  std::vector<Eigen::Vector3d, Eigen::aligned_allocator<Eigen::Vector3d> > Position3DList;
 
