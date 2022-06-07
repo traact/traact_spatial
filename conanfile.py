@@ -5,11 +5,11 @@ from conans import ConanFile, CMake, tools
 
 class Traact(ConanFile):
     name = "traact_spatial"
-    version = "0.0.1"
-    
+    version = "0.1.0"
+
     description = "Spatial datatypes and functions for traact using eigen geometry"
     url = "https://github.com/traact/traact_spatial.git"
-    license = "BSD 3-Clause"
+    license = "MIT"
     author = "Frieder Pankratz"
 
     short_paths = True
@@ -27,18 +27,17 @@ class Traact(ConanFile):
         "with_tests": True
     }
 
-    exports_sources = "include/*", "src/*", "util/*", "tests/*", "CMakeLists.txt"
+    exports_sources =  "src/*", "util/*", "tests/*", "CMakeLists.txt"
 
-    def requirements(self):        
+    def requirements(self):
         self.requires("traact_core/%s@camposs/stable" % self.version)
 
         if self.options.with_tests:
             self.requires("gtest/1.10.0")
-        self.requires("eigen/[3.3.9]@camposs/stable")
-        #self.requires("ceres/1.14.0-r4@camposs/stable")
+        self.requires("eigen/[>=3.4.0]")
+        # self.requires("ceres/1.14.0-r4@camposs/stable")
         self.requires("ceres-solver/2.0.0")
 
-        
     def _configure_cmake(self):
         cmake = CMake(self)
         cmake.verbose = True
@@ -65,7 +64,6 @@ class Traact(ConanFile):
             self.options['glog'].shared = True;
             self.options['gflags'].shared = True;
 
-
     def build(self):
         cmake = self._configure_cmake()
         cmake.build()
@@ -76,4 +74,4 @@ class Traact(ConanFile):
 
     def package_info(self):
         self.cpp_info.libs = [self.name]
-        #self.cpp_info.libs = tools.collect_libs(self)
+        # self.cpp_info.libs = tools.collect_libs(self)

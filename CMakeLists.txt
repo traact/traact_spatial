@@ -6,7 +6,7 @@ option(WITH_COVERAGE "" ON)
 set(CMAKE_CXX_STANDARD 17)
 
 # public header
-set(LIB_HEADERS include/traact/spatial.h include/traact/spatialBody.h include/traact/traact_spatial_export.h)
+set(LIB_HEADERS src/traact/spatial.h src/traact/spatialBody.h src/traact/traact_spatial_export.h)
 
 set(PLUGIN_HEADERS
 
@@ -14,7 +14,7 @@ set(PLUGIN_HEADERS
 
 
 # rest of source code
-set(LIB_SOURCES src/spatial.cpp src/spatialBody.cpp)
+set(LIB_SOURCES src/traact/spatial.cpp src/traact/spatialBody.cpp)
 
 set(PLUGIN_SOURCES
         )
@@ -51,24 +51,24 @@ add_definitions(-DTBB_PREVIEW_FLOW_GRAPH_NODES=1)
 #set(CMAKE_VISIBILITY_INLINES_HIDDEN 1)
 #generate_export_header(${CONAN_PACKAGE_NAME} EXPORT_FILE_NAME "../../include/traact/${CONAN_PACKAGE_NAME}_export.h")
 
-if(UNIX)
-    if(APPLE)
+if (UNIX)
+    if (APPLE)
         MESSAGE(STATUS "Building for Macos.")
         add_definitions(-DTRAACT_TARGET_APPLE=1)
-    endif()
+    endif ()
     MESSAGE(STATUS "Building for Unix.")
     add_definitions(-DTRAACT_TARGET_UNIX=1)
-elseif(WIN32)
+elseif (WIN32)
     MESSAGE(STATUS "Building for Windows.")
     add_definitions(-DTRAACT_TARGET_WINDOWS=1)
-endif()
+endif ()
 
 if (MSVC)
     # per default disable extended aligned storage for now on msvc
     add_definitions(-D_DISABLE_EXTENDED_ALIGNED_STORAGE -DHAVE_SNPRINTF)
-endif()
+endif ()
 
-add_compile_options( -fno-gnu-unique )
+add_compile_options(-fno-gnu-unique)
 
 add_library(${CONAN_PACKAGE_NAME} SHARED
         ${LIB_HEADERS}
@@ -78,29 +78,20 @@ add_library(${CONAN_PACKAGE_NAME} SHARED
         )
 
 
-
-
 conan_target_link_libraries(${CONAN_PACKAGE_NAME})
 
 set_target_properties(${CONAN_PACKAGE_NAME} PROPERTIES VERSION ${CONAN_PACKAGE_VERSION})
 #set_target_properties(${CONAN_PACKAGE_NAME} PROPERTIES PUBLIC_HEADER ${LIB_HEADERS})
 
-target_include_directories(${CONAN_PACKAGE_NAME} PUBLIC
-        $<INSTALL_INTERFACE:include>
-        $<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>)
 target_include_directories(${CONAN_PACKAGE_NAME} PRIVATE
         ${CMAKE_CURRENT_SOURCE_DIR}/src
         )
 
-IF (NOT WIN32)
-    MESSAGE(STATUS "Set boost::ublas alignment to 16")
-    set_target_properties(${CONAN_PACKAGE_NAME} PROPERTIES COMPILE_DEFINITIONS "BOOST_UBLAS_BOUNDED_ARRAY_ALIGN=__attribute__ ((aligned (16)))")
-ENDIF (NOT WIN32)
 
 install(TARGETS ${CONAN_PACKAGE_NAME}
         LIBRARY DESTINATION ${CMAKE_INSTALL_LIBDIR})
 
-install(DIRECTORY "${CMAKE_CURRENT_SOURCE_DIR}/include/traact" # source directory
+install(DIRECTORY "src/traact" # source directory
         DESTINATION "include" # target directory
         FILES_MATCHING # install only matched files
         PATTERN "*.h" # select header files
