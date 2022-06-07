@@ -49,7 +49,7 @@ jobs:
         uses: grisumbras/conan-upload@v0.3.0
         with:
           login: traact_ci
-          password: ${{ secrets.SECRET_CONAN_PASSSWORD }}
+          password: ${{ secrets.TRAACT_ORG_CI_CAMPOSS_PASSWORD }}
           url: https://conan.campar.in.tum.de/api/conan/conan-traact
           remote: https://conan.campar.in.tum.de/api/conan/conan-traact
           user: traact
