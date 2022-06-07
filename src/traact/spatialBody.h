@@ -1,8 +1,4 @@
-/**
- *   Copyright (C) 2022  Frieder Pankratz <frieder.pankratz@gmail.com>
- *
- *   License in root folder
-**/
+/** Copyright (C) 2022  Frieder Pankratz <frieder.pankratz@gmail.com> **/
 
 #ifndef TRAACTMULTI_TRAACT_SPATIAL_INCLUDE_TRAACT_SPATIALBODY_H_
 #define TRAACTMULTI_TRAACT_SPATIAL_INCLUDE_TRAACT_SPATIALBODY_H_

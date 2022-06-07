@@ -1,8 +1,4 @@
-/**
- *   Copyright (C) 2022  Frieder Pankratz <frieder.pankratz@gmail.com>
- *
- *   License in root folder
-**/
+/** Copyright (C) 2022  Frieder Pankratz <frieder.pankratz@gmail.com> **/
 
 #ifndef TRAACT_SPATIAL_MODULE_SRC_TRAACT_SPATIAL_SPATIALPLUGIN_H_
 #define TRAACT_SPATIAL_MODULE_SRC_TRAACT_SPATIAL_SPATIALPLUGIN_H_
