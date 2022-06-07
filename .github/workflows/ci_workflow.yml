@@ -2,7 +2,6 @@ name: Build Conan Pakages
 on:
   push:
     branches:
-      - 'releases/**'
       - 'main'
 
 
@@ -38,11 +37,18 @@ jobs:
           python -m pip install --upgrade pip
           pip install conan
           pip install conan_package_tools
-      - name: Generating conan user directory and building the solution
+      - name: Checkout package
+        uses: actions/checkout@v3
+          with:
+            path: main
         run: |
-          conan user
-          conan remote list
-          python build.py
+          ls
+      - name: Upload package
+        uses: grisumbras/conan-upload@latest
+        with:
+          login: traact_ci
+          password: ${{ secrets.SECRET_CONAN_PASSSWORD }}
+          url: https://conan.campar.in.tum.de/api/conan/conan-traact
         env:
           CONAN_LOGIN_USERNAME: "traact_ci"
           CONAN_PASSWORD: ${{ secrets.TRAACT_ORG_CI_CAMPOSS_PASSWORD }}
