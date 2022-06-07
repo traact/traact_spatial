@@ -39,8 +39,8 @@ jobs:
           pip install conan_package_tools
       - name: Checkout package
         uses: actions/checkout@v3
-          with:
-            path: main
+        with:
+          path: main
         run: |
           ls
       - name: Upload package
