@@ -42,9 +42,9 @@ jobs:
         with:
           path: main
       - name: Export package
-          run: |
-            conan user
-            conan export . traact_spatial/0.1.0@traact/latest
+        run: |
+          conan user
+          conan export . traact_spatial/0.1.0@traact/latest
       - name: Upload Package
         uses: grisumbras/conan-upload@v0.3.0
         with:
