@@ -51,14 +51,6 @@ jobs:
           login: traact_ci
           password: ${{ secrets.SECRET_CONAN_PASSSWORD }}
           url: https://conan.campar.in.tum.de/api/conan/conan-traact
-        env:
-          CONAN_LOGIN_USERNAME: "traact_ci"
-          CONAN_PASSWORD: ${{ secrets.TRAACT_ORG_CI_CAMPOSS_PASSWORD }}
-          CONAN_CONFIG_URL: "https://github.com/traact/bincrafters-config.git"
-          CONAN_USERNAME: "traact"
-          CONAN_CHANNEL: "latest"
-          CONAN_STABLE_BRANCH_PATTERN: "releases/*"
-          CONAN_UPLOAD: "https://conan.campar.in.tum.de/api/conan/conan-traact@True@traact-camposs"
-          CONAN_BUILD_POLICY: "outdated"
-          CONAN_BASE_PROFILE: ${{ matrix.conan_base_profile }}
-          CONAN_REVISIONS_ENABLED: 1
+          remote: https://conan.campar.in.tum.de/api/conan/conan-traact
+          user: traact
+          channel: latest
