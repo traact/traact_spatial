@@ -5,12 +5,6 @@
 
 namespace traact::spatial {
 
-const char *BodyHeader::NativeTypeName = "traact::spatial::Body";
-const char *BodyHeader::MetaType = "spatial:Body";
-
-const char *BodyListHeader::NativeTypeName = "traact::spatial::BodyList";
-const char *BodyListHeader::MetaType = "spatial:BodyList";
-
 std::map<BodyJointType, BodyJointType> BodyUtils::JointToParent =
     {{BodyJointType::PELVIS, BodyJointType::PELVIS},
      {BodyJointType::SPINE_NAVAL, BodyJointType::PELVIS},
@@ -52,4 +46,14 @@ std::map<BodyJointType, BodyJointType> BodyUtils::JointToParent =
 
 }
 
+namespace traact::component::facade {
+CREATE_SPATIAL_BODY_COMPONENTS(ApplicationAsyncSource)
+CREATE_SPATIAL_BODY_COMPONENTS(ApplicationSyncSink)
+}
 
+BEGIN_TRAACT_PLUGIN_REGISTRATION
+    REGISTER_DEFAULT_TRAACT_TYPE(traact::spatial::BodyHeader)
+    REGISTER_DEFAULT_TRAACT_TYPE(traact::spatial::BodyListHeader)
+    REGISTER_SPATIAL_BODY_COMPONENTS(traact::component::facade::ApplicationAsyncSource)
+    REGISTER_SPATIAL_BODY_COMPONENTS(traact::component::facade::ApplicationSyncSink)
+END_TRAACT_PLUGIN_REGISTRATION

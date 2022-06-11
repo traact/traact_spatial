@@ -60,34 +60,19 @@ struct TRAACT_SPATIAL_EXPORT Body {
     std::map<BodyJointType, BodyJoint> bodyJoints;
 };
 
-struct TRAACT_SPATIAL_EXPORT BodyHeader {
-    /**
-     * Definitions needed by traact and the user to use a datatype
-     */
-    static const char *MetaType;
-    typedef Body NativeType;
-    static const char *NativeTypeName;
-    const size_t size = sizeof(NativeType);
-};
+using BodyList = std::vector<Body>;
 
-struct TRAACT_SPATIAL_EXPORT BodyListHeader {
-    /**
-     * Definitions needed by traact and the user to use a datatype
-     */
-    static const char *MetaType;
-    typedef std::vector<Body> NativeType;
-    static const char *NativeTypeName;
-    const size_t size = sizeof(NativeType);
-};
-
-class TRAACT_SPATIAL_EXPORT BodyFactoryObject : public buffer::TemplatedDefaultFactoryObject<BodyHeader> {
-
-};
-
-class TRAACT_SPATIAL_EXPORT BodyListFactoryObject : public buffer::TemplatedDefaultFactoryObject<BodyListHeader> {
-
-};
+CREATE_TRAACT_HEADER_TYPE(BodyHeader, traact::spatial::Body, "spatial:Body", TRAACT_SPATIAL_EXPORT)
+CREATE_TRAACT_HEADER_TYPE(BodyListHeader, traact::spatial::BodyList, "spatial:BodyList", TRAACT_SPATIAL_EXPORT)
 
 }
+
+#define CREATE_SPATIAL_BODY_COMPONENTS(external_component) \
+CREATE_TEMPLATED_TRAACT_COMPONENT_FACTORY(external_component, traact::spatial, BodyHeader) \
+CREATE_TEMPLATED_TRAACT_COMPONENT_FACTORY(external_component, traact::spatial, BodyListHeader) \
+
+#define REGISTER_SPATIAL_BODY_COMPONENTS(external_component) \
+REGISTER_TEMPLATED_DEFAULT_COMPONENT(external_component, BodyHeader) \
+REGISTER_TEMPLATED_DEFAULT_COMPONENT(external_component, BodyListHeader) \
 
 #endif //TRAACTMULTI_TRAACT_SPATIAL_INCLUDE_TRAACT_SPATIALBODY_H_

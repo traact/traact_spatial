@@ -31,14 +31,23 @@ CREATE_TRAACT_HEADER_TYPE(Position3DListHeader, traact::spatial::Position3DList,
 
 }// namespace traact::spatial
 
+#define CREATE_SPATIAL_COMPONENTS(external_component) \
+CREATE_TEMPLATED_TRAACT_COMPONENT_FACTORY(external_component, traact::spatial, Pose6DHeader) \
+CREATE_TEMPLATED_TRAACT_COMPONENT_FACTORY(external_component, traact::spatial, Rotation3DHeader) \
+CREATE_TEMPLATED_TRAACT_COMPONENT_FACTORY(external_component, traact::spatial, Translation3DHeader) \
+CREATE_TEMPLATED_TRAACT_COMPONENT_FACTORY(external_component, traact::spatial, Position2DHeader) \
+CREATE_TEMPLATED_TRAACT_COMPONENT_FACTORY(external_component, traact::spatial, Position3DHeader)\
+CREATE_TEMPLATED_TRAACT_COMPONENT_FACTORY(external_component, traact::spatial, Position2DListHeader)\
+CREATE_TEMPLATED_TRAACT_COMPONENT_FACTORY(external_component, traact::spatial, Position3DListHeader)
+
 #define REGISTER_SPATIAL_COMPONENTS(external_component) \
-REGISTER_COMPONENT(external_component<traact::spatial::Pose6DHeader>) \
-REGISTER_COMPONENT(external_component<traact::spatial::Rotation3DHeader>) \
-REGISTER_COMPONENT(external_component<traact::spatial::Translation3DHeader>) \
-REGISTER_COMPONENT(external_component<traact::spatial::Position2DHeader>) \
-REGISTER_COMPONENT(external_component<traact::spatial::Position3DHeader>)\
-REGISTER_COMPONENT(external_component<traact::spatial::Position2DListHeader>)\
-REGISTER_COMPONENT(external_component<traact::spatial::Position3DListHeader>)
+REGISTER_TEMPLATED_DEFAULT_COMPONENT(external_component, Pose6DHeader) \
+REGISTER_TEMPLATED_DEFAULT_COMPONENT(external_component, Rotation3DHeader) \
+REGISTER_TEMPLATED_DEFAULT_COMPONENT(external_component, Translation3DHeader) \
+REGISTER_TEMPLATED_DEFAULT_COMPONENT(external_component, Position2DHeader) \
+REGISTER_TEMPLATED_DEFAULT_COMPONENT(external_component, Position3DHeader)\
+REGISTER_TEMPLATED_DEFAULT_COMPONENT(external_component, Position2DListHeader)\
+REGISTER_TEMPLATED_DEFAULT_COMPONENT(external_component, Position3DListHeader)
 
 
 #endif//TRAACT_SPATIAL_SRC_TRAACT_SPATIAL_H_
