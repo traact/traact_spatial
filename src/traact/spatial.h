@@ -14,10 +14,10 @@ namespace traact::spatial {
 using Pose6D = Eigen::Transform<traact::Scalar, 3,2>;
 using Rotation3D = Eigen::Quaternion<traact::Scalar >;
 using Translation3D = Eigen::Translation<traact::Scalar, 3>;
-//using Position2D = Eigen::Vector<traact::Scalar, 2>;
-//using Position3D = Eigen::Vector<traact::Scalar, 3>;
-//using Position2DList = std::vector<Eigen::Vector<traact::Scalar, 2>>;
-//using Position3DList = std::vector<Eigen::Vector<traact::Scalar, 3>>;
+using Position2D = Eigen::Vector<traact::Scalar, 2>;
+using Position3D = Eigen::Vector<traact::Scalar, 3>;
+using Position2DList = std::vector<Eigen::Vector<traact::Scalar, 2>>;
+using Position3DList = std::vector<Eigen::Vector<traact::Scalar, 3>>;
 
 CREATE_TRAACT_HEADER_TYPE(Pose6DHeader, traact::spatial::Pose6D, "spatial:Pose6D", TRAACT_SPATIAL_EXPORT)
 CREATE_TRAACT_HEADER_TYPE(Rotation3DHeader, traact::spatial::Rotation3D, "spatial:Rotation3D", TRAACT_SPATIAL_EXPORT)
