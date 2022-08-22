@@ -13,7 +13,7 @@ project(${CONAN_PACKAGE_NAME}_PROJECT VERSION ${CONAN_PACKAGE_VERSION})
 include(traact_default_library_setup)
 
 # public header
-set(SPATIAL_SRC src/traact/spatial.h src/traact/spatialBody.h src/traact/traact_spatial_export.h src/traact/spatial.cpp src/traact/spatialBody.cpp)
+set(SPATIAL_SRC src/traact/spatial.h src/traact/spatialBody.h src/traact/traact_spatial_export.h src/traact/spatial.cpp src/traact/spatialBody.cpp src/traact/spatial_convert.h src/traact/spatial_convert.cpp)
 
 add_library(${CONAN_PACKAGE_NAME} SHARED ${SPATIAL_SRC})
 
