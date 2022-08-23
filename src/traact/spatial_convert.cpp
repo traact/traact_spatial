@@ -4,6 +4,8 @@
 
 namespace traact::spatial {
 
+
+
 template<>
 Pose6D convert<OpenCVCoordinateSystem, OpenGLCoordinateSystem> (const Pose6D & pose){
     using VectorType = Eigen::Matrix<Scalar, 3,1>;
@@ -27,5 +29,46 @@ template<>
 Pose6D convert<OpenGLCoordinateSystem, OpenCVCoordinateSystem> (const Pose6D & pose){
     return convert<OpenCVCoordinateSystem, OpenGLCoordinateSystem>(pose);
 }
+
+// TODO implement conversions
+template<>
+Pose6D convert<OpenCVCoordinateSystem, Unity3DCoordinateSystem> (const Pose6D & pose){
+    return pose;
+}
+template<>
+Pose6D convert<Unity3DCoordinateSystem, OpenCVCoordinateSystem> (const Pose6D & pose){
+    return convert<Unity3DCoordinateSystem, OpenCVCoordinateSystem>(pose);
+}
+
+
+
+
+
+Pose6D Convert<Pose6DHeader>::fromTraact (const typename Pose6DHeader::NativeType& value, CoordinateSystems to) {
+    switch (to) {
+
+        case CoordinateSystems::Traact:
+        case CoordinateSystems::OpenCV: return value;
+        case CoordinateSystems::OpenGL: return convert<TraactCoordinateSystem, OpenGLCoordinateSystem>(value);
+        case CoordinateSystems::Unity3D:return convert<TraactCoordinateSystem, Unity3DCoordinateSystem>(value);
+        default:
+            throw std::logic_error("invalid coordinate system type");
+    }
+}
+
+Pose6D Convert<Pose6DHeader>::toTraact(const typename Pose6DHeader::NativeType &value,
+                                       traact::spatial::CoordinateSystems from)  {
+    switch (from) {
+
+        case CoordinateSystems::Traact:
+        case CoordinateSystems::OpenCV: return value;
+        case CoordinateSystems::OpenGL: return convert<OpenGLCoordinateSystem, TraactCoordinateSystem>(value);
+        case CoordinateSystems::Unity3D:return convert<Unity3DCoordinateSystem, TraactCoordinateSystem>(value);
+        default:
+            throw std::logic_error("invalid coordinate system type");
+    }
+}
+
+
 
 }
