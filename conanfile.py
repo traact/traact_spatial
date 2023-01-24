@@ -23,7 +23,7 @@ class TraactPackage(ConanFile):
         self.requires("eigen/[>=3.4.0]")
         self.requires("ceres-solver/2.0.0")
         if self.options.with_tests:
-            self.requires("gtest/[>=1.11.0]")
+            self.requires("gtest/cci.20210126")
 
     def configure(self):
         if self.settings.build_type != "Debug":
