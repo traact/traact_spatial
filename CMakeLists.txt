@@ -1,33 +1,44 @@
 cmake_minimum_required(VERSION 3.16)
 
-if (EXISTS ${CMAKE_CURRENT_BINARY_DIR}/conanbuildinfo.cmake)
-    include(${CMAKE_CURRENT_BINARY_DIR}/conanbuildinfo.cmake)
-else ()
-    message(FATAL_ERROR "The file conanbuildinfo.cmake doesn't exist, you have to run conan install first")
-endif ()
+set(TARGET_NAME traact_spatial)
 
-list(APPEND CMAKE_MODULE_PATH ${CONAN_TRAACT_RUN_ENV_ROOT}/cmake)
+project(${TARGET_NAME} VERSION "0.0.0" LANGUAGES CXX)
 
-project(${CONAN_PACKAGE_NAME}_PROJECT VERSION ${CONAN_PACKAGE_VERSION})
+find_package(traact_base)
+list(APPEND CMAKE_MODULE_PATH ${traact_base_INCLUDE_DIR})
 
 include(traact_default_library_setup)
 
-# public header
-set(SPATIAL_SRC src/traact/spatial.h src/traact/spatialBody.h src/traact/traact_spatial_export.h src/traact/spatial.cpp src/traact/spatialBody.cpp src/traact/spatial_convert.h src/traact/spatial_convert.cpp)
+set(SPATIAL_PUBLIC_HEADER  
+    src/traact/spatial.h 
+    src/traact/spatialBody.h 
+    src/traact/spatial_convert.h
+    )
 
-add_library(${CONAN_PACKAGE_NAME} SHARED ${SPATIAL_SRC})
+set(SPATIAL_SRC 
+    src/traact/spatial.cpp 
+    src/traact/spatialBody.cpp 
+    src/traact/spatial_convert.cpp
+    )
 
-conan_target_link_libraries(${CONAN_PACKAGE_NAME})
+add_library(${TARGET_NAME} SHARED ${SPATIAL_SRC})
 
-install(DIRECTORY "src/traact" # source directory
-        DESTINATION "include" # target directory
-        FILES_MATCHING # install only matched files
-        PATTERN "*.h" # select header files
-        )
+find_package(traact_core)
+find_package(Eigen3)
+find_package(Ceres)
+
+target_link_libraries(${TARGET_NAME} traact_core::traact_core Eigen3::Eigen Ceres::ceres)
+generate_export_header(${TARGET_NAME} EXPORT_FILE_NAME ${CMAKE_CURRENT_SOURCE_DIR}/include/traact/traact_spatial_export.h)
+
+target_include_directories(${TARGET_NAME} PUBLIC
+$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}/include>
+$<INSTALL_INTERFACE:${CMAKE_INSTALL_INCLUDEDIR}>
+)
 
 include(traact_default_library_final)
+
+install(DIRECTORY include/ DESTINATION ${CMAKE_INSTALL_INCLUDEDIR})
 
 if (WITH_TESTS)
     add_subdirectory(tests)
 endif ()
-

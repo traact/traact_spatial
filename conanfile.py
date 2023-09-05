@@ -1,13 +1,14 @@
 # /usr/bin/python3
 import os
-from conans import ConanFile, CMake, tools
+from conan import ConanFile
 
 
 class TraactPackage(ConanFile):
-    python_requires = "traact_run_env/1.0.0@traact/latest"
-    python_requires_extend = "traact_run_env.TraactPackageCmake"
+    python_requires = "traact_base/0.0.0@traact/latest"
+    python_requires_extend = "traact_base.TraactPackageCmake"
 
     name = "traact_spatial"
+    version = "0.0.0"
     description = "Spatial datatypes and functions for traact using eigen geometry"
     url = "https://github.com/traact/traact_spatial.git"
     license = "MIT"
@@ -16,14 +17,25 @@ class TraactPackage(ConanFile):
     settings = "os", "compiler", "build_type", "arch"
     compiler = "cppstd"
 
-    exports_sources = "src/*", "util/*", "tests/*", "CMakeLists.txt"
+    exports_sources = "src/*", "include/*", "tests/*", "CMakeLists.txt"
+
+    options = {
+        "shared": [True, False],
+        "with_tests": [True, False],
+        "trace_logs_in_release": [True, False],
+    }
+
+    default_options = {
+        "shared": True,
+        "with_tests": True,
+        "trace_logs_in_release": True,
+    }    
 
     def requirements(self):
-        self.traact_requires("traact_core", "latest")
-        self.requires("eigen/[>=3.4.0]")
-        self.requires("ceres-solver/2.0.0")
-        if self.options.with_tests:
-            self.requires("gtest/cci.20210126")
+        self.requires("traact_base/0.0.0@traact/latest")
+        self.requires("traact_core/0.0.0@traact/latest")
+        self.requires("eigen/[>=3.4.0]", transitive_headers=True)
+        self.requires("ceres-solver/2.0.0", transitive_headers=True, transitive_libs=True)        
 
     def configure(self):
         if self.settings.build_type != "Debug":
@@ -31,3 +43,6 @@ class TraactPackage(ConanFile):
             self.options['ceres-solver'].use_gflags = True;
             self.options['glog'].shared = True;
             self.options['gflags'].shared = True;
+
+    def _after_package_info(self):
+        self.cpp_info.libs = ["traact_spatial"]
