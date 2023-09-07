@@ -35,14 +35,15 @@ class TraactPackage(ConanFile):
         self.requires("traact_base/0.0.0@traact/latest")
         self.requires("traact_core/0.0.0@traact/latest")
         self.requires("eigen/[>=3.4.0]", transitive_headers=True)
-        self.requires("ceres-solver/2.0.0", transitive_headers=True, transitive_libs=True)        
+        self.requires("ceres-solver/2.1.0", transitive_headers=True, transitive_libs=True)        
 
     def configure(self):
-        if self.settings.build_type != "Debug":
-            self.options['ceres-solver'].use_glog = True;
-            self.options['ceres-solver'].use_gflags = True;
-            self.options['glog'].shared = True;
-            self.options['gflags'].shared = True;
+        #if self.settings.build_type != "Debug":
+        #    self.options['ceres-solver'].use_glog = True
+        #    self.options['ceres-solver'].use_gflags = True
+        #    self.options['glog'].shared = True
+        #    self.options['gflags'].shared = True
+        pass
 
     def _after_package_info(self):
         self.cpp_info.libs = ["traact_spatial"]

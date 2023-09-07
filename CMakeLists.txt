@@ -27,6 +27,7 @@ find_package(traact_core)
 find_package(Eigen3)
 find_package(Ceres)
 
+
 target_link_libraries(${TARGET_NAME} traact_core::traact_core Eigen3::Eigen Ceres::ceres)
 generate_export_header(${TARGET_NAME} EXPORT_FILE_NAME ${CMAKE_CURRENT_SOURCE_DIR}/include/traact/traact_spatial_export.h)
 
