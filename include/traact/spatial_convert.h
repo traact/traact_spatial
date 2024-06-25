@@ -48,7 +48,7 @@ typename T::NativeType Convert<T>::fromTraact(const typename T::NativeType &valu
 };
 template<typename T>
 typename T::NativeType Convert<T>::toTraact(const typename T::NativeType &value, CoordinateSystems from){
-    SPDLOG_ERROR("conversion from traact not implemented");
+    SPDLOG_ERROR("conversion to traact not implemented");
     return value;
 }
 

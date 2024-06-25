@@ -37,7 +37,7 @@ Pose6D convert<OpenCVCoordinateSystem, Unity3DCoordinateSystem> (const Pose6D & 
 }
 template<>
 Pose6D convert<Unity3DCoordinateSystem, OpenCVCoordinateSystem> (const Pose6D & pose){
-    return convert<Unity3DCoordinateSystem, OpenCVCoordinateSystem>(pose);
+    return pose;
 }
 
 
