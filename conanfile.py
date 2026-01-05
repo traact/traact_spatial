@@ -34,7 +34,7 @@ class TraactPackage(ConanFile):
     def requirements(self):
         self.requires("traact_base/0.0.0@traact/latest")
         self.requires("traact_core/0.0.0@traact/latest")
-        self.requires("eigen/[>=3.4.0]", transitive_headers=True)
+        self.requires("eigen/3.4.0", transitive_headers=True, force=True)
         self.requires("ceres-solver/2.1.0", transitive_headers=True, transitive_libs=True)        
 
     def configure(self):
